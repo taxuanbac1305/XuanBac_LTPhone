@@ -33,7 +33,7 @@ export default function ListProduct() {
     return (
         <View>
             <View style={styles.catetitle}>
-                <Text style={{ fontSize: 20, color: 'red', fontWeight: '600' }}>Sản phẩm</Text>
+                <Text style={{ fontSize: 20, color: 'blue', fontWeight: '600' }}>Sản phẩm</Text>
                 <Text style={{ fontSize: 15 }}>Xem thêm</Text>
             </View>
             <ScrollView>

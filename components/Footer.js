@@ -31,7 +31,7 @@ const Footer = () => {
 
 const styles = StyleSheet.create({
   footer: {
-    paddingTop: 360,
+    paddingTop: 15,
     backgroundColor: '#f2f2f2',
     padding: 10,
     alignItems: 'center',

@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     },
     item: {
         borderWidth: 2,
-        borderColor: "red",
+        borderColor: "blue",
         borderRadius: 10,
     },
     catetitle: {
