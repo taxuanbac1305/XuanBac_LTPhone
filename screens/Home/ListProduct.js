@@ -3,14 +3,12 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'rea
 import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import ListCategory from './ListCategory';
 
 export default function ListProduct() {
     const navigation = useNavigation();
-    const handleProductPress = (product) => {
-        navigation.navigate('SingleProduct', { product });
-    };
-
     const [products, setProducts] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(null);
 
     useEffect(() => {
         getAllProduct();
@@ -24,18 +22,43 @@ export default function ListProduct() {
             })
             .catch(function (error) {
                 alert(error.message);
-            })
-            .finally(function () {
-                alert('Finally called');
             });
+    };
+
+    const getProductsByCategory = (category) => {
+        axios
+            .get(`https://fakestoreapi.com/products/category/${category}`)
+            .then(function (response) {
+                setProducts(response.data);
+            })
+            .catch(function (error) {
+                alert(error.message);
+            });
+    };
+
+    const handleProductPress = (product) => {
+        navigation.navigate('SingleProduct', { product, category: selectedCategory });
+    };
+
+    const handleCategoryPress = (category) => {
+        setSelectedCategory(category);
+        getProductsByCategory(category);
+    };
+
+    const handleSeeMorePress = () => {
+        getAllProduct();
     };
 
     return (
         <View>
+            <ListCategory onPress={handleCategoryPress} />
             <View style={styles.catetitle}>
                 <Text style={{ fontSize: 20, color: 'blue', fontWeight: '600' }}>Sản phẩm</Text>
-                <Text style={{ fontSize: 15 }}>Xem thêm</Text>
+                <TouchableOpacity onPress={handleSeeMorePress}>
+                    <Text style={{ fontSize: 15 }}>Xem thêm</Text>
+                </TouchableOpacity>
             </View>
+
             <ScrollView>
                 <View style={styles.container}>
                     {products.map((product) => (
@@ -53,7 +76,7 @@ export default function ListProduct() {
                                 <View style={styles.ratingContainer}>
                                     <Text style={styles.ratingText}>Rating: </Text>
                                     <FontAwesome name="star" style={styles.starIcon} />
-                                    <Text style={styles.ratingValue}>{product.rating.rate.toFixed(1)}</Text>
+<Text style={styles.ratingValue}>{product.rating.rate.toFixed(1)}</Text>
                                     <Text style={styles.ratingCount}>({product.rating.count} reviews)</Text>
                                 </View>
                             </View>
@@ -72,7 +95,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     catetitle: {
-        flexDirection: 'row',justifyContent: 'space-between',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         marginTop: 15,
     },
     item: {

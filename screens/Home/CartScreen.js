@@ -60,10 +60,28 @@ const CartScreen = () => {
   const getCartItemCount = (cartItems) => {
     return cartItems.reduce((total, item) => total + item.quantity, 0);
   };
+  
+  <Button title="Checkout" onPress={handleCheckout} />
 
-  const handleCheckout = () => {
-    // Thực hiện quá trình thanh toán ở đây
-    console.log('Checkout');
+  const handleCheckout = async () => {
+    try {
+      // Gửi thông tin đơn hàng và thanh toán đến máy chủ hoặc dịch vụ thanh toán
+      // Code ở đây để gửi thông tin đơn hàng và thanh toán và nhận kết quả
+      // ...
+  
+      // Sau khi thanh toán thành công, cập nhật trạng thái giỏ hàng và hiển thị thông báo
+      setCartItems([]);
+      setTotalPrice(0);
+      await AsyncStorage.setItem('cartItems', JSON.stringify([]));
+  
+      // Hiển thị thông báo thanh toán thành công cho người dùng
+      console.log('Payment successful');
+    } catch (error) {
+      console.log('Error during checkout:', error);
+  
+      // Hiển thị thông báo lỗi thanh toán cho người dùng
+      console.log('Payment failed');
+    }
   };
 
   return (

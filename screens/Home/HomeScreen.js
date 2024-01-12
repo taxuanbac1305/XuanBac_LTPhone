@@ -5,14 +5,15 @@ import ListProduct from './ListProduct';
 import Search from './Search';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
+// import LoginScreen from 'screens/LoginScreen';
 
 export default function HomeScreen() {
     return (
         <>
-        <Header></Header>
+           {/* <LoginScreen></LoginScreen> */}
+            <Header></Header>
             <ScrollView>
                 <View>
-                    <ListCategory></ListCategory>
                     <ListProduct></ListProduct>
                 </View>
             </ScrollView>
