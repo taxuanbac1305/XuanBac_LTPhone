@@ -1,30 +1,40 @@
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TextInput, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const Search = () => {
   const [searchText, setSearchText] = useState('');
+  const [searchResult, setSearchResult] = useState('');
 
   const handleSearch = () => {
-    console.log('Performing search for:', searchText);
+    setSearchResult('Performing search for: ' + searchText);
   };
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Search"
-        value={searchText}
-        onChangeText={setSearchText}
-      />
-      <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
-        <MaterialIcons name="search" size={24} color="gray" />
-      </TouchableOpacity>
+    <View>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.input}
+          placeholder="Search"
+          value={searchText}
+          onChangeText={setSearchText}
+        />
+        <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
+          <MaterialIcons name="search" size={24} color="gray" />
+        </TouchableOpacity>
+      </View>
+      <Text>{searchResult}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  input: {
+    flex: 1,
+    height: 40,
+    fontSize: 16,
+    paddingHorizontal: 10,
+  },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -35,13 +45,6 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     elevation: 2,
   },
-  input: {
-    flex: 1,
-    height: 40,
-    fontSize: 16,
-    paddingHorizontal: 10,
-  },
- 
 });
 
 export default Search;

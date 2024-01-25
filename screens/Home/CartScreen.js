@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, Button } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, Button, Modal } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CartContext } from './CartContext';
 
@@ -8,6 +8,8 @@ const CartScreen = () => {
 
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [notification, setNotification] = useState('');
+  const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
     fetchCartItems();
@@ -60,28 +62,27 @@ const CartScreen = () => {
   const getCartItemCount = (cartItems) => {
     return cartItems.reduce((total, item) => total + item.quantity, 0);
   };
-  
-  <Button title="Checkout" onPress={handleCheckout} />
 
-  const handleCheckout = async () => {
+  const handlePayment = async () => {
     try {
-      // Gửi thông tin đơn hàng và thanh toán đến máy chủ hoặc dịch vụ thanh toán
-      // Code ở đây để gửi thông tin đơn hàng và thanh toán và nhận kết quả
-      // ...
-  
-      // Sau khi thanh toán thành công, cập nhật trạng thái giỏ hàng và hiển thị thông báo
       setCartItems([]);
       setTotalPrice(0);
       await AsyncStorage.setItem('cartItems', JSON.stringify([]));
-  
-      // Hiển thị thông báo thanh toán thành công cho người dùng
+
       console.log('Payment successful');
+      setNotification('Payment successful!');
+      setShowNotification(true);
     } catch (error) {
-      console.log('Error during checkout:', error);
-  
-      // Hiển thị thông báo lỗi thanh toán cho người dùng
+      console.log('Error during pay:', error);
+
       console.log('Payment failed');
+      setNotification('Payment failed.');
+      setShowNotification(true);
     }
+  };
+
+  const closeNotification = () => {
+    setShowNotification(false);
   };
 
   return (
@@ -108,7 +109,24 @@ const CartScreen = () => {
         <Text style={styles.emptyCartText}>Your cart is empty.</Text>
       )}
       <Text style={styles.totalPrice}>Total Price: ${totalPrice.toFixed(2)}</Text>
-      <Button title="Checkout" onPress={handleCheckout} />
+      <Button title="Pay" onPress={handlePayment} />
+      {notification && (
+        <Modal
+          transparent
+          visible={showNotification}
+          animationType="fade"
+          onRequestClose={closeNotification}
+        >
+          <View style={styles.notificationContainer}>
+            <View style={styles.notificationBox}>
+              <View style={styles.notificationBorder}>
+                <Text style={styles.notificationText}>{notification}</Text>
+              </View>
+              <Button title="OK" onPress={closeNotification} />
+            </View>
+          </View>
+        </Modal>
+      )}
     </View>
   );
 };
@@ -116,46 +134,48 @@ const CartScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: 20,
+    backgroundColor: '#f5f5f5',
   },
   title: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 16,
+    marginBottom: 20,
+    color: '#333',
   },
   cartItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 2,
   },
   cartItemImage: {
-    width: 50,
-    height: 50,
-    marginRight: 8,
+    width: 80,
+    height: 80,
+    borderRadius: 10,
+    marginRight: 10,
   },
   cartItemInfo: {
     flex: 1,
   },
-  cartItemTitle: {
+  cartItemPrice: {
     fontSize: 16,
     fontWeight: 'bold',
-  },
-  cartItemPrice: {
-    fontSize: 14,
-  },
-  removeItemButton: {
-    fontSize: 14,
-    color: 'red',
-    marginTop: 8,
-  },
-  emptyCartText: {
-    fontSize: 16,
-    fontStyle: 'italic',
+    color: '#333',
+    marginTop: 5,
   },
   totalPrice: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginTop: 16,
+    color: '#333',
+    marginTop: 30,
     textAlign: 'center',
   },
 });

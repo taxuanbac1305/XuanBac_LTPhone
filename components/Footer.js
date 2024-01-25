@@ -1,61 +1,70 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import React, { useContext, useEffect } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
-const Footer = () => {
+export default function Footer() {
+  const navigation = useNavigation();
+  const route = useRoute();
+
+  useEffect(() => {
+    if (route.name !== 'HomeScreen') {
+      navigation.navigate('HomeScreen');
+    }
+  }, []);
+
+  const handleHomePress = () => {
+    navigation.navigate('HomeScreen');
+  };
+
+  const handleHeartPress = () => {
+    navigation.navigate('HomeScreen');
+  };
+
+  const handleProfilePress = () => {
+    navigation.navigate('Profile');
+  };
+  const handleCartPress = () => {
+    navigation.navigate('CartScreen');
+  };
+
   return (
-    <View style={styles.footer}>
-      <TouchableOpacity style={styles.button}>
-        <Icon name="home" size={20} color="#444" />
-        <Text style={styles.buttonText}></Text>
+    <View style={styles.footerContainer}>
+      <TouchableOpacity onPress={handleHomePress} style={[styles.footerButton, route.name === 'HomeScreen' && styles.activeButton]}>
+        <FontAwesome name="home" size={24} color={route.name === 'HomeScreen' ? 'red' : 'black'} />
       </TouchableOpacity>
-      
-      <TouchableOpacity style={styles.button}>
-        <Icon name="heart" size={20} color="#FF0000" />
-        <Text style={styles.buttonText}></Text>
+      <TouchableOpacity onPress={handleHomePress} style={[styles.footerButton, route.name === 'HomeScreen' && styles.activeButton]}>
+        <FontAwesome name="heart" size={20} color={route.name === 'HomeScreen' ? 'black' : 'red'} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Icon name="user" size={20} color="#444" />
-        <Text style={styles.buttonText}></Text>
+      <TouchableOpacity onPress={handleProfilePress} style={[styles.footerButton, route.name === 'Profile' && styles.activeButton]}>
+        <FontAwesome name="user" size={24} color={route.name === 'Profile' ? 'red' : 'black'} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-          <Icon name="cog" size={20} color="#444" />
-          <Text style={styles.buttonText}></Text>
-
-        </TouchableOpacity>
-      
-      
+      <TouchableOpacity onPress={handleCartPress} style={[styles.footerButton, route.name === 'CartScreen' && styles.activeButton]}>
+        <FontAwesome name="shopping-cart" size={24} color="black" />
+      </TouchableOpacity>
+      {/* Add other buttons here */}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  footer: {
-    paddingTop: 15,
+  footerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    height: 50,
     backgroundColor: '#f2f2f2',
-    padding: 10,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+  footerButton: {
+    flex: 1,
     alignItems: 'center',
-    flexDirection: 'row',
     justifyContent: 'center',
-    
   },
-  button: {
-    marginHorizontal: 10,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 20,
-    backgroundColor: '#e0e0e0',
-    elevation: 2,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  buttonText: {
-    fontSize: 16,
-    color: '#444',
+  activeButton: {
     fontWeight: 'bold',
-    textTransform: 'uppercase',
-    marginLeft: 5,
   },
 });
-
-export default Footer;

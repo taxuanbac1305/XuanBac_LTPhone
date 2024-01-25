@@ -55,23 +55,30 @@ const womensClothingImage = require('../../images/nike4.jpg');
 }
 
 const styles = StyleSheet.create({
+  item: {
+    borderWidth: 2,
+    borderColor: '#007AFF',
+    borderRadius: 20,
+    padding: 5,
+    marginRight: 3,
+  },
+  catetitle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 5,
+  },
   catepic: {
     width: 60,
     height: 60,
+    borderRadius: 10,
+    marginRight: 10,
   },
   contain: {
-    marginTop: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
   },
-  item: {
-    borderWidth: 2,
-    borderColor: "blue",
-    borderRadius: 10,
-  },
-  catetitle: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 15,
-  },
+
 });

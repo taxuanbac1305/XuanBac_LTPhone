@@ -53,22 +53,26 @@ export default function Header() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
-    paddingTop: 40,
+    marginTop: 0,
+    paddingTop: 0,
   },
   titleContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  searchContainer: {
-    flex: 1,
-    marginRight: 20,
-    marginBottom: 5,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    backgroundColor: '#f2f2f2',
+    borderBottomColor: '#ddd',
   },
   cartContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+   searchContainer: {
+    flex: 1,
+    marginRight: 20,
+    marginBottom: 5,
   },
   cartCountContainer: {
     backgroundColor: 'red',
@@ -83,12 +87,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 12,
   },
-  logoContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 0,
-  },
+  
   logo: {
     width: 120,
     height: 120,
@@ -99,4 +98,11 @@ const styles = StyleSheet.create({
     fontSize: 30,
     marginLeft: 30,
   },
+  logoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 0,
+  },
+
 });
